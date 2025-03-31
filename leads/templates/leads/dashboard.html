@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Management Dashboard
+{% endblock title %}
+
+{% block content %}
+    <h1>Management Dashboard</h1>
+    <small>Manage everything, everyone, from anywhere.</small>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Age</th>
+                <th>Agent's Username</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lead in leads %}
+                <tr>
+                    <td>
+                        <a href="{% url 'leads:lead_details' lead.id %}">
+                            {{ lead.id }}
+                        </a>
+                    </td>
+                    <td>{{ lead.firstname }}</td>
+                    <td>{{ lead.lastname }}</td>
+                    <td>{{ lead.age }}</td>
+                    <td>{{ lead.agent.agent.username }}</td>
+                    <td class="d-flex gap-2">
+                        <form action="{% url 'leads:delete_lead' %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" value="{{ lead.id }}" name="id">
+                            <button type="submit" class="btn btn-secondary"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                data-bs-custom-class="custom-tooltip"
+                                data-bs-title="This top tooltip is themed via CSS variables.">
+                                Delete
+                            </button>
+                        </form>
+                        <a href="{% url 'leads:edit_lead' lead.id %}">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}

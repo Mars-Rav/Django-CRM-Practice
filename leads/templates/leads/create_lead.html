@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Create Lead
+{% endblock title %}
+
+{% block content %}
+    <div class="container w-75 mt-5">
+        <h1 class="mb-4">Create New Lead</h1>
+        <form action="{% url 'leads:create_lead' %}" method="POST" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-md-6">
+                <label for="inputFirstName4" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="inputFirstName4" name="firstname">
+            </div>
+            <div class="col-md-6">
+                <label for="inputLastName4" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="inputLastName4" name="lastname">
+            </div>
+            <div class="col-12">
+                <label for="inputAddress" class="form-label">Age</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="32" name="age">
+            </div>
+            <div class="col-md-12">
+                <label for="inputState" class="form-label">State</label>
+                <select id="inputState" class="form-select" name="agent">
+                    <option selected>Choose...</option>
+                    {% for agent in agents %}
+                        <option value="{{ agent.agent.id }}">{{ agent.agent.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Django Create Form
+{% endblock title %}
+
+{% block content %}
+    <div>
+        <h1>Django Create Lead Form</h1>
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ form }}
+            
+            <button type="submit">Create</button>
+        </form>
+    </div>
+{% endblock content %}

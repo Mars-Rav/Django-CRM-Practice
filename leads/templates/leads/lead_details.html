@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ lead.firstname }} {{ lead.lastname }}
+{% endblock title %}
+
+{% block content %}
+    <div class="container w-75 mt-5">
+        <h1 class="mb-5">{{lead.firstname}} {{ lead.lastname }}'s Lead</h1>
+        <form action="{% url 'leads:edit_lead' lead.id %}" class="d-flex flex-column gap-4">
+            <div class="input-group">
+                <span class="input-group-text">ID</span>
+                <input type="text" aria-label="First name" class="form-control" value="{{ lead.id }}">
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">First and last name</span>
+                <input type="text" aria-label="First name" class="form-control" value="{{ lead.firstname }}">
+                <input type="text" aria-label="Last name" class="form-control" value="{{ lead.lastname }}">
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">Age</span>
+                <input type="text" aria-label="First name" class="form-control" value="{{ lead.age }}">
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">Agent</span>
+                <select id="inputState" class="form-select" name="agent">
+                    <!-- <option selected>{{ lead.agent.agent.username }}</option> -->
+                    {% for agent in agents %}
+                        <option value="{{ agent.agent.id }}" 
+                            {% if lead.agent.agent.id == agent.agent.id %}
+                                selected
+                            {% endif %}
+                        >{{ agent.agent.username }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="btn btn-dark">Edit</button>
+        </form>
+    </div>
+{% endblock content %}
